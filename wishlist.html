@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VELORA – Favorilerim</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Favori sayfasına özel header ── */
+    .fav-header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      background: var(--header-bg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 40px;
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      transition: background 0.3s;
+    }
+
+    .fav-header .logo {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .fav-header-right {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .fav-count {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      font-family: 'Montserrat', sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="fav-header">
+  <a href="index.html" class="logo">VELORA</a>
+
+  <div class="fav-header-right">
+    <span class="fav-count" id="fav-count-label"></span>
+    <!-- Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" title="Karanlık Mod">🌙</button>
+    <a href="index.html" class="back-home">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+      Ana Sayfa
+    </a>
+  </div>
+</header>
+
+<!-- FAVORİLER İÇERİĞİ -->
+<div class="favorites-container">
+  <h2>Favorilerim</h2>
+  <div id="favorites-list"></div>
+</div>
+
+<script src="script.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Sadece gerçekten var olan ürünlerin ID'lerini say
+    const saved = (JSON.parse(localStorage.getItem("saved")) || []).map(Number);
+    const validCount = saved.filter(id => products.find(p => p.id === id)).length;
+    const el = document.getElementById("fav-count-label");
+    if (el) el.textContent = validCount > 0 ? `${validCount} ürün` : "";
+  });
+</script>
+</body>
+</html>
